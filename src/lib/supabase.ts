@@ -11,7 +11,12 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
 });
 
 // Helper to get public URL for profile image
-export const getProfileImageUrl = (filename: string = 'profile.jpg') => {
+export const getProfileImageUrl = (filename: string = 'profile_photo.jpg') => {
   // Use the 'portfolio' bucket as per instructions
+  return `${supabaseUrl}/storage/v1/object/public/portfolio/${filename}`;
+};
+
+// Helper to get public URL for CV
+export const getCvUrl = (filename: string = 'cv.pdf') => {
   return `${supabaseUrl}/storage/v1/object/public/portfolio/${filename}`;
 };

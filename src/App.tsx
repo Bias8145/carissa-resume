@@ -7,7 +7,7 @@ import { Footer } from './components/Footer';
 import { data } from './data';
 import { Moon, Sun, Languages, MapPin, Mail, Building2, Download, Share2, Award, FileBadge, Zap, User, GraduationCap, Briefcase, Star, Sparkles } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { getProfileImageUrl } from './lib/supabase';
+import { getProfileImageUrl, getCvUrl } from './lib/supabase';
 
 const AppContent = () => {
   const { theme, toggleTheme } = useTheme();
@@ -27,6 +27,34 @@ const AppContent = () => {
   }, []);
 
   const content = data[language];
+
+  // FUNCTION: Handle Share
+  const handleShare = async () => {
+    const shareData = {
+      title: 'Carissa Ratri Kusuma Dewi | Professional Resume',
+      text: content.profile.summary,
+      url: window.location.href,
+    };
+
+    if (navigator.share) {
+      try {
+        await navigator.share(shareData);
+      } catch (err) {
+        console.log('Error sharing:', err);
+      }
+    } else {
+      // Fallback for desktop/unsupported browsers
+      navigator.clipboard.writeText(window.location.href);
+      alert(language === 'ID' ? 'Tautan telah disalin ke papan klip!' : 'Link copied to clipboard!');
+    }
+  };
+
+  // FUNCTION: Handle Download CV
+  const handleDownloadCv = () => {
+    const cvUrl = getCvUrl('cv.pdf');
+    // Open in new tab which triggers download for PDF usually
+    window.open(cvUrl, '_blank');
+  };
 
   return (
     <div className="relative w-full h-[100dvh] flex flex-col overflow-hidden bg-[#fdfbff] dark:bg-[#0f0518] text-slate-900 dark:text-purple-50 transition-colors duration-500 font-sans selection:bg-purple-200 selection:text-purple-900 dark:selection:bg-purple-700 dark:selection:text-purple-100">
@@ -140,11 +168,17 @@ const AppContent = () => {
                 </div>
 
                 <div className="flex gap-4 mt-4">
-                  <button className="flex items-center gap-3 px-8 py-4 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-full font-bold hover:scale-105 transition-transform active:scale-95 shadow-xl shadow-purple-900/20 dark:shadow-white/10 tracking-wide">
+                  <button 
+                    onClick={handleDownloadCv}
+                    className="flex items-center gap-3 px-8 py-4 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-full font-bold hover:scale-105 transition-transform active:scale-95 shadow-xl shadow-purple-900/20 dark:shadow-white/10 tracking-wide"
+                  >
                     <Download size={20} />
                     {content.ui.profile.downloadCv}
                   </button>
-                  <button className="flex items-center gap-2 px-6 py-4 bg-white/80 dark:bg-purple-900/20 backdrop-blur-sm text-purple-900 dark:text-purple-100 rounded-full font-bold hover:bg-purple-50 dark:hover:bg-purple-900/40 transition-colors active:scale-95 border border-purple-100 dark:border-purple-800/50 shadow-sm">
+                  <button 
+                    onClick={handleShare}
+                    className="flex items-center gap-2 px-6 py-4 bg-white/80 dark:bg-purple-900/20 backdrop-blur-sm text-purple-900 dark:text-purple-100 rounded-full font-bold hover:bg-purple-50 dark:hover:bg-purple-900/40 transition-colors active:scale-95 border border-purple-100 dark:border-purple-800/50 shadow-sm"
+                  >
                     <Share2 size={20} />
                   </button>
                 </div>
