@@ -9,7 +9,7 @@
   }
   
   body {
-    @apply antialiased overflow-hidden bg-[#fdfbff] dark:bg-[#0f0518];
+    @apply antialiased overflow-hidden bg-[#f8fdff] dark:bg-[#0b1121];
   }
 }
 
@@ -31,7 +31,7 @@
   }
 }
 
-/* Custom Scrollbar - Purple Theme */
+/* Custom Scrollbar - Blue Theme */
 ::-webkit-scrollbar {
   width: 6px;
 }
@@ -39,8 +39,8 @@
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  @apply bg-purple-200 dark:bg-purple-900 rounded-full;
+  @apply bg-blue-200 dark:bg-blue-900 rounded-full;
 }
 ::-webkit-scrollbar-thumb:hover {
-  @apply bg-purple-300 dark:bg-purple-800;
+  @apply bg-blue-300 dark:bg-blue-800;
 }
